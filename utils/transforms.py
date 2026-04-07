@@ -26,7 +26,7 @@ def flatten_lap_times(season, round_num, laps):
                 "driver_id": timing.get("driverId"),
                 "lap_time": timing.get("time"),
                 "position": timing.get("position", 0),
-                "ingested_at": datetime.now(timezone.utc)
+                "ingested_at": datetime.now(timezone.utc).isoformat()
             }
 
             results.append(row)
@@ -43,7 +43,7 @@ def flatten_pit_stops(season, round_num, pit_stops):
                 "driver_id": pit.get("driverId"),
                 "time": pit.get("time"),
                 "duration": pit.get("duration"),
-                "ingested_at": datetime.now(timezone.utc)
+                "ingested_at": datetime.now(timezone.utc).isoformat()
             }
         results.append(row)
     return results

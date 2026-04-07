@@ -9,6 +9,7 @@ Script purpose:
 """
 import logging
 from datetime import datetime, timezone
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -45,5 +46,21 @@ def flatten_pit_stops(season, round_num, pit_stops):
                 "duration": pit.get("duration"),
                 "ingested_at": datetime.now(timezone.utc).isoformat()
             }
+        results.append(row)
+    return results
+
+def flatten_races(races):
+    results = []
+    for race in races:
+        row = {
+            "season": race.get("season"),
+            "round": race.get("round"),
+            "race_name": race.get("raceName"),
+            "circuit_id": race.get("Circuit", {}).get("circuitId"),
+            "date": race.get("date"),
+            "results": json.dumps(race.get("Results", [])),
+            "ingested_at": datetime.now(timezone.utc).isoformat()
+            }
+
         results.append(row)
     return results

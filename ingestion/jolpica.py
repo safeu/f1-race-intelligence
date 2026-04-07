@@ -9,6 +9,7 @@ Script purpose:
 import requests
 import logging
 from utils.config import base_url
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,12 @@ def fetch_all_pages(url, extract_key):
 
     while True:
         response = requests.get(url, params={"limit": 100, "offset": offset})
+
+        if response.status_code == 429:
+            logger.warning("Rate limited, waiting 10 seconds...")
+            time.sleep(10)
+            continue
+
         response.raise_for_status()
 
         total = int(response.json()["MRData"]["total"])
@@ -38,6 +45,7 @@ def get_races(season):
         return fetch_all_pages(url, "Races")
     except Exception as e:
         logger.error(f"Error fetching races: {e}")
+        return []
 
 def get_lap_times(season, round_num):
     try:
@@ -49,6 +57,7 @@ def get_lap_times(season, round_num):
         return all_laps
     except Exception as e:
         logger.error(f"Error fetching lap times: {e}")
+        return []
 
 def get_pit_stops(season, round_num):
     try:
@@ -60,3 +69,4 @@ def get_pit_stops(season, round_num):
         return all_pits
     except Exception as e:
         logger.error(f"Error fetching pit stop records: {e}")
+        return []

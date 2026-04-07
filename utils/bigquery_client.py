@@ -29,14 +29,21 @@ def get_bigquery_client():
 
 
 
-def load_to_bigquery(rows, table_name):
+def load_to_bigquery(rows, table_name, write_mode="WRITE_TRUNCATE"):
     try:
+        if not rows:
+            logger.info(f"No rows to load for {table_name}, skipping.")
+            return
+
         client = get_bigquery_client()
         table_ref = f"{GCP_PROJECT_ID}.{BQ_DATASET}.{table_name}"
 
+        if write_mode not in ["WRITE_APPEND", "WRITE_TRUNCATE"]:
+            raise ValueError(f"Invalid write mode: {write_mode}")
+
         job_config = bigquery.LoadJobConfig(
-            write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE
-            )
+            write_disposition=getattr(bigquery.WriteDisposition, write_mode)
+        )
         
         load_job = client.load_table_from_json(rows, table_ref, job_config=job_config)
         load_job.result()

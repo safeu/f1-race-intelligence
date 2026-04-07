@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: f1_raw
+    schema: f1_raw
+    tables:
+      - name: raw_races
+        description: All races in formula one
+      - name: raw_lap_times
+        description: All lap times recorded in a formula one race
+      - name: raw_pit_stops
+        description: All pit stop records in a formula one race

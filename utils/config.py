@@ -23,3 +23,6 @@ if not GCP_PROJECT_ID:
 if not BQ_DATASET:
     raise ValueError("BQ_DATASET is not set in .env")
 
+
+#other variable settings
+base_url = "https://api.jolpi.ca/ergast/f1"

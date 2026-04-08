@@ -35,5 +35,7 @@ models:
       +materialized: view
     intermediate:
       +materialized: view
+    dimensions:
+      +materialized: table
     marts:
       +materialized: table

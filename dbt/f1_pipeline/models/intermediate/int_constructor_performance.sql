@@ -1,10 +1,10 @@
 /*
 =============================================================
-Model: int_championship_progression
+Model: int_constructor_performance
 =============================================================
 Description:
-    Calculates cumulative points per driver per season
-    across races. Useful to track championship progression.
+    Calculates cumulative points per constructor per season
+    accross races. Useful to track constructor performance
 
 Depends on:
     - stg_races
@@ -31,7 +31,7 @@ parsed AS(
     SELECT
         season,
         round_num,
-        JSON_VALUE(result, '$.Driver.driverId') AS driver_id,
+        JSON_VALUE(result, '$.Constructor.constructorId') AS constructor_id,
         CAST(JSON_VALUE(result, '$.points') AS FLOAT64) AS race_points
     FROM race_results
 ),
@@ -51,7 +51,7 @@ sprint_parsed AS (
     SELECT
         season,
         round_num,
-        JSON_VALUE(result, '$.Driver.driverId') AS driver_id,
+        JSON_VALUE(result, '$.Constructor.constructorId') AS constructor_id,
         CAST(JSON_VALUE(result, '$.points') AS FLOAT64) AS race_points
     FROM sprint_results
 ),
@@ -60,7 +60,7 @@ parsed_dedup AS (
     SELECT DISTINCT
         season,
         round_num,
-        driver_id,
+        constructor_id,
         race_points
     FROM parsed
 ),
@@ -69,7 +69,7 @@ sprint_dedup AS (
     SELECT DISTINCT
         season,
         round_num,
-        driver_id,
+        constructor_id,
         race_points
     FROM sprint_parsed
 ),
@@ -87,22 +87,22 @@ deduplicated AS (
     SELECT
         season,
         round_num,
-        driver_id,
+        constructor_id,
         SUM(race_points) AS race_points
     FROM all_results
-    GROUP BY season, round_num, driver_id
+    GROUP BY season, round_num, constructor_id
 )
 
 
 SELECT
     season,
     round_num,
-    driver_id,
+    constructor_id,
     race_points,
     SUM(race_points) OVER(
-        PARTITION BY season, driver_id
+        PARTITION BY season, constructor_id
         ORDER BY round_num
         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
     ) AS cumulative_points
 FROM deduplicated
-ORDER BY season, driver_id, round_num
+ORDER BY season, constructor_id, round_num

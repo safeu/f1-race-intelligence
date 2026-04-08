@@ -1,3 +1,12 @@
+/*
+=============================================================
+Model: stg_lap_times
+=============================================================
+Description:
+    Staging script for lap times table. Kept it raw as much as possible
+
+*/
+
 WITH source AS (
     SELECT * FROM {{ source('f1_raw', 'raw_lap_times') }}
 ),

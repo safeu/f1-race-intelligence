@@ -5,8 +5,10 @@ sources:
     schema: f1_raw
     tables:
       - name: raw_races
-        description: All races in formula one
+        description: All races in formula one (Jolpica API)
       - name: raw_lap_times
-        description: All lap times recorded in a formula one race
+        description: All lap times recorded in a formula one race (Jolpica API)
       - name: raw_pit_stops
-        description: All pit stop records in a formula one race
+        description: All pit stop records in a formula one race (Jolpica API)
+      - name: raw_sprint_races
+        description: All sprint races in formula one (Jolpica API)

@@ -1,3 +1,13 @@
+/*
+=============================================================
+Model: stg_pit_stops
+=============================================================
+Description:
+    Staging script for pit_stops table. Kept things raw but formatted some things like
+    duration, etc.
+
+*/
+
 WITH source AS (
     SELECT * FROM {{ source('f1_raw', 'raw_pit_stops') }}
 ),

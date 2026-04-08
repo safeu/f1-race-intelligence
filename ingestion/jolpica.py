@@ -70,3 +70,13 @@ def get_pit_stops(season, round_num):
     except Exception as e:
         logger.error(f"Error fetching pit stop records: {e}")
         return []
+
+
+#i forgor sprint races
+def get_sprint_results(season):
+    try:
+        url = f"{base_url}/{season}/sprint.json"
+        return fetch_all_pages(url, "Races")
+    except Exception as e:
+        logger.error(f"Error fetching sprint results: {e}")
+        return []

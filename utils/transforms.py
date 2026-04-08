@@ -64,3 +64,22 @@ def flatten_races(races):
 
         results.append(row)
     return results
+
+
+#i forgor sprint races 
+def flatten_sprint_results(sprint_races):
+    results = []
+
+    for race in sprint_races:
+        row = {
+            "season": race.get("season"),
+            "round": race.get("round"),
+            "race_name": race.get("raceName"),
+            "circuit_id": race.get("Circuit", {}).get("circuitId"),
+            "date": race.get("date"),
+            "sprint_results": json.dumps(race.get("SprintResults", [])),
+            "ingested_at": datetime.now(timezone.utc).isoformat()
+        }
+        results.append(row)
+
+    return results

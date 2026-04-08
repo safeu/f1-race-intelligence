@@ -5,10 +5,14 @@ Run ingestion pipeline
 Script purpose:
     Main entry point for loading historical F1 data from
     Jolpica API into BigQuery raw tables.
+
+Warning:
+    If this script is ran and you already have data in BigQuery, it would replace
+    all of the data in there due to WRITE_TRUNCATE.
 """
 import logging
-from ingestion.jolpica import get_races, get_lap_times, get_pit_stops
-from utils.transforms import flatten_races, flatten_lap_times, flatten_pit_stops
+from ingestion.jolpica import get_races, get_lap_times, get_pit_stops, get_sprint_results
+from utils.transforms import flatten_races, flatten_lap_times, flatten_pit_stops, flatten_sprint_results
 from utils.bigquery_client import load_to_bigquery
 import time
 
@@ -23,6 +27,7 @@ def main():
         load_to_bigquery([], "raw_races", write_mode="WRITE_TRUNCATE")
         load_to_bigquery([], "raw_lap_times", write_mode="WRITE_TRUNCATE")
         load_to_bigquery([], "raw_pit_stops", write_mode="WRITE_TRUNCATE")
+        load_to_bigquery([], "raw_sprint_races", write_mode="WRITE_TRUNCATE")
 
         for season in SEASONS:
             logger.info(f"Processing season {season}...")
@@ -31,6 +36,11 @@ def main():
             races = get_races(season)
             flat_races = flatten_races(races)
             load_to_bigquery(flat_races, "raw_races", write_mode="WRITE_APPEND")
+
+            #then sprints (i forgor)
+            sprint_races = get_sprint_results(season)
+            flat_sprints = flatten_sprint_results(sprint_races)
+            load_to_bigquery(flat_sprints, "raw_sprint_races", write_mode="WRITE_APPEND")
 
             for race in races:
                 try:

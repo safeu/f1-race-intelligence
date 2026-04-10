@@ -16,12 +16,14 @@ KEY_PATH = os.getenv("KEY_PATH")
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 BQ_DATASET = os.getenv("BQ_DATASET")
 
-if not KEY_PATH:
-    raise ValueError("KEY_PATH is not set in .env")
-if not GCP_PROJECT_ID:
-    raise ValueError("GCP_PROJECT_ID is not set in .env")
-if not BQ_DATASET:
-    raise ValueError("BQ_DATASET is not set in .env")
+try:
+    import streamlit as st
+    GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID") or st.secrets.get("GCP_PROJECT_ID")
+    BQ_DATASET = os.getenv("BQ_DATASET") or st.secrets.get("BQ_DATASET")
+except Exception:
+    GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+    BQ_DATASET = os.getenv("BQ_DATASET")
+
 
 
 #other variable settings

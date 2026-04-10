@@ -24,7 +24,7 @@ ingesting live telemetry and historical race data from dual APIs into BigQuery,
 with dbt models surfacing pit strategy efficiency, driver consistency scores, 
 and tyre degradation curves.
 
-*Data covers the 2020–2024 Formula 1 seasons.*
+*Data covers the 2020–2024 Formula 1 seasons. Currently only have Jolpica API (OpenF1 API in the works)*
 """)
 
 st.divider()

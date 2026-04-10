@@ -11,6 +11,8 @@ import streamlit as st
 import plotly.express as px
 from utils.streamlit_bigquery import run_query
 from utils.config import GCP_PROJECT_ID
+from utils.driver_images import get_driver_photo
+
 
 st.set_page_config(page_title="Driver Performance", page_icon="🏎️", layout="wide")
 
@@ -27,6 +29,7 @@ drivers_df = run_query(drivers_query)
 
 
 selected_driver = st.selectbox("Select Driver", options=drivers_df['driver_name'])
+photo_url = get_driver_photo(selected_driver)
 
 
 driver_query = f"""
@@ -40,7 +43,19 @@ driver_query = f"""
 """
 driver_df = run_query(driver_query)
 
+col_photo, col_info = st.columns([1, 3])
 
+with col_photo:
+    if photo_url:
+        st.image(photo_url, width=200)
+
+with col_info:
+    st.subheader(selected_driver)
+    # get nationality and driver code from driver_df
+    nationality = driver_df['nationality'].iloc[0]
+    driver_code = driver_df['driver_code'].iloc[0]
+    st.markdown(f"**Code:** {driver_code}")
+    st.markdown(f"**Nationality:** {nationality}")
 
 points_query = f"""
     SELECT SUM(season_max) as career_points

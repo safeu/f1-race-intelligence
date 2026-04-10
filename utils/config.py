@@ -26,3 +26,24 @@ if not BQ_DATASET:
 
 #other variable settings
 base_url = "https://api.jolpi.ca/ergast/f1"
+
+
+#colors
+CONSTRUCTOR_COLORS = {
+    'Red Bull': '#3671C6',
+    'Ferrari': '#E8002D',
+    'Mercedes': '#27F4D2',
+    'McLaren': '#FF8000',
+    'Aston Martin': '#229971',
+    'Alpine F1 Team': '#FF87BC',
+    'Williams': '#64C4FF',
+    'RB F1 Team': '#6692FF',
+    'Haas F1 Team': '#B6BABD',
+    'Sauber': '#52E252',
+    'Alfa Romeo': '#C92D4B',
+    'AlphaTauri': '#5E8FAA',
+    'Renault': '#FFF500',
+    'Racing Point': '#F596C8',
+    'Force India': '#F596C8',
+    'Toro Rosso': '#469BFF',
+}

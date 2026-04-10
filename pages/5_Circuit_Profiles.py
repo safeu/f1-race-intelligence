@@ -55,7 +55,7 @@ fig1 = px.bar(
     color_continuous_scale='RdYlGn_r'
 )
 fig1.update_xaxes(tickangle=45)
-st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1, width='stretch')
 
 st.subheader("📈 Overtaking Opportunities")
 fig2 = px.bar(
@@ -68,7 +68,7 @@ fig2 = px.bar(
     color_continuous_scale='Blues'
 )
 fig2.update_xaxes(tickangle=45)
-st.plotly_chart(fig2, use_container_width=True)
+st.plotly_chart(fig2, width='stretch')
 
 st.divider()
 st.subheader("📋 Full Circuit Data")
@@ -76,5 +76,5 @@ st.dataframe(
     circuits_df[['race_name', 'seasons_held', 'avg_lap_time_sec', 
                  'avg_pit_stops', 'avg_pit_duration', 'avg_positions_changed']],
     hide_index=True,
-    use_container_width=True
+    width='stretch'
 )

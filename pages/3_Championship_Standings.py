@@ -61,7 +61,7 @@ fig1 = px.line(
     },
     title=f"{selected_season} Drivers Championship",
 )
-st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1, width='stretch')
 
 
 #FOR Constructors Championship
@@ -86,7 +86,7 @@ fig2 = px.line(
     title=f"{selected_season} Constructors Championship",
     labels={'round_num': 'Round', 'cumulative_constructors_points': 'Points'}
 )
-st.plotly_chart(fig2, use_container_width=True)
+st.plotly_chart(fig2, width='stretch')
 
 
 st.subheader("📋 Final Drivers Championship Tally")
@@ -108,7 +108,7 @@ driver_champion_df['rank'] = range(1, len(driver_champion_df) + 1)
 st.dataframe(
     driver_champion_df[['rank', 'driver_name', 'driver_code', 'total_points']],
     hide_index=True,
-    use_container_width=True
+    width='stretch'
 )
 
 st.divider()
@@ -131,7 +131,7 @@ constructors_champion_df['rank'] = range(1, len(constructors_champion_df) + 1)
 st.dataframe(
     constructors_champion_df[['rank', 'constructor_name', 'total_points']],
     hide_index=True,
-    use_container_width=True
+    width='stretch'
 )
 
 st.divider()

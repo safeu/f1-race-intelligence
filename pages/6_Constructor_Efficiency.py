@@ -45,7 +45,7 @@ fig1 = px.bar(
     color='constructor_name',
     color_discrete_map=CONSTRUCTOR_COLORS
 )
-st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1, width='stretch')
 
 st.subheader("💥 DNF Rate")
 fig2 = px.bar(
@@ -57,7 +57,7 @@ fig2 = px.bar(
     color='constructor_name',
     color_discrete_map=CONSTRUCTOR_COLORS
 )
-st.plotly_chart(fig2, use_container_width=True)
+st.plotly_chart(fig2, width='stretch')
 
 st.subheader("⏱️ Avg Pit Stop Duration")
 fig3 = px.bar(
@@ -69,7 +69,7 @@ fig3 = px.bar(
     color='constructor_name',
     color_discrete_map=CONSTRUCTOR_COLORS
 )
-st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(fig3, width='stretch')
 
 st.divider()
 st.subheader("📋 Full Constructor Data")
@@ -78,5 +78,5 @@ st.dataframe(
     constructor_df[['rank', 'constructor_name', 'total_season_points', 
                     'dnf_rate_pct', 'avg_pit_duration']],
     hide_index=True,
-    use_container_width=True
+    width='stretch'
 )

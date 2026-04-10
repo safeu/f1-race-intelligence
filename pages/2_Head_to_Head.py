@@ -141,4 +141,4 @@ fig = px.line(
     labels={'round_num': 'Round', 'position': 'Finish Position'}
 )
 fig.update_yaxes(autorange="reversed")
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width='stretch')

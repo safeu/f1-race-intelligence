@@ -9,3 +9,7 @@ venv/
 target/
 dbt_packages/
 logs/
+.streamlit/secrets.toml
+service_account*.json
+credentials*.json
+*_key.json

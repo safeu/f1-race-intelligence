@@ -64,7 +64,7 @@ st.dataframe(
     strategy_df[['driver_code', 'driver_name', 'num_stops', 
                  'total_pit_duration', 'avg_pit_duration']],
     hide_index=True,
-    use_container_width=True
+    width='stretch'
 )
 
 st.subheader("📉 Tyre Degradation")
@@ -75,6 +75,6 @@ fig = px.bar(
     title=f"Avg Tyre Degradation — Season {selected_season} Round {selected_round}",
     labels={'driver_code': 'Driver', 'avg_degradation_slope': 'Degradation Slope'}
 )
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width='stretch')
 
 

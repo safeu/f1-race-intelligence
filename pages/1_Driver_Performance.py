@@ -97,7 +97,7 @@ fig1 = px.line(
     labels={'round_num': 'Round', 'finish_position': 'Finish Position'}
 )
 fig1.update_yaxes(autorange="reversed")
-st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1, width='stretch')
 
 
 
@@ -113,7 +113,7 @@ fig2 = px.bar(
     color_discrete_sequence=px.colors.qualitative.Set2
 )
 fig2.add_hline(y=0, line_dash="dash", line_color="white", opacity=0.5)
-st.plotly_chart(fig2, use_container_width=True)
+st.plotly_chart(fig2, width='stretch')
 
 
 
@@ -125,4 +125,4 @@ best_circuits = driver_df.groupby('race_name').agg(
     races=('round_num', 'count')
 ).round(2).sort_values('avg_finish').reset_index()
 
-st.dataframe(best_circuits, hide_index=True, use_container_width=True)
+st.dataframe(best_circuits, hide_index=True, width='stretch')

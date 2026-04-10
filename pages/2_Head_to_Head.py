@@ -15,6 +15,7 @@ from utils.driver_images import get_driver_photo
 
 st.set_page_config(page_title="Head to Head", page_icon="⚔️", layout="wide")
 st.title("⚔️ Head to Head — Teammate Comparison")
+st.caption("Note: Current Data only has the 2020-2024 Formula 1 season")
 
 
 all_drivers_query = f"""

@@ -16,6 +16,7 @@ from utils.config import CONSTRUCTOR_COLORS
 
 st.set_page_config(page_title="Championship Standings", page_icon="🏆", layout="wide")
 st.title("🏆 Championship Standings")
+st.caption("Note: Current Data only has the 2020-2024 Formula 1 season")
 
 
 season_query = f"""

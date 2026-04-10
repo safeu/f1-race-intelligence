@@ -11,6 +11,7 @@ import streamlit as st
 import plotly.express as px
 from utils.streamlit_bigquery import run_query
 from utils.config import GCP_PROJECT_ID
+from utils.driver_images import get_driver_photo
 
 st.set_page_config(page_title="Head to Head", page_icon="⚔️", layout="wide")
 st.title("⚔️ Head to Head — Teammate Comparison")
@@ -56,6 +57,23 @@ selected_teammate_id = teammates_df[
 
 st.divider()
 
+col_driver1, col_vs, col_driver2 = st.columns([2, 1, 2])
+
+with col_driver1:
+    photo1 = get_driver_photo(selected_driver)
+    if photo1:
+        st.image(photo1, width=200)
+    st.subheader(selected_driver)
+
+with col_vs:
+    st.markdown("<h1 style='text-align: center; margin-top: 50px;'>VS</h1>", 
+                unsafe_allow_html=True)
+
+with col_driver2:
+    photo2 = get_driver_photo(selected_teammate)
+    if photo2:
+        st.image(photo2, width=200)
+    st.subheader(selected_teammate)
 
 
 h2h_query = f"""

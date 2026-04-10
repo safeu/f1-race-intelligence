@@ -24,7 +24,19 @@ renamed AS (
         ingested_at
 
     FROM source
+),
+
+deduplicated AS (
+    SELECT
+        season,
+        round_num,
+        race_name,
+        circuit_id,
+        date,
+        results,
+        MIN(ingested_at) AS ingested_at
+    FROM renamed
+    GROUP BY season, round_num, race_name, circuit_id, date, results
 )
 
-
-SELECT * FROM renamed
+SELECT * FROM deduplicated

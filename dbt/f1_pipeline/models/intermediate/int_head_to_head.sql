@@ -42,7 +42,8 @@ paired AS (
         r1.driver_id,
         r1.finish_position,
         r2.driver_id AS teammate_id,
-        r2.finish_position AS teammate_finish
+        r2.finish_position AS teammate_finish,
+        'race' AS race_type  -- add this
     FROM race_results_dedup r1
     JOIN race_results_dedup r2
         ON r1.season = r2.season
@@ -77,7 +78,8 @@ sprint_paired AS (
         r1.driver_id,
         r1.finish_position,
         r2.driver_id AS teammate_id,
-        r2.finish_position AS teammate_finish
+        r2.finish_position AS teammate_finish,
+        'sprint' AS race_type
     FROM sprint_results_dedup r1
     JOIN sprint_results_dedup r2
         ON r1.season = r2.season
@@ -101,5 +103,6 @@ SELECT
     teammate_id,
     finish_position,
     teammate_finish,
+    race_type,
     CASE WHEN finish_position < teammate_finish THEN TRUE ELSE FALSE END AS beat_teammate
 FROM all_paired

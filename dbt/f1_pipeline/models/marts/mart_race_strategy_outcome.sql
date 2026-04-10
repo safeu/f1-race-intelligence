@@ -17,8 +17,15 @@ WITH strategy AS(
     SELECT * FROM {{ref('int_pit_strategy')}}
 ),
 
-tyre_degradation AS(
-    SELECT * FROM {{ref('int_tyre_degradation')}}
+tyre_degradation AS (
+    SELECT
+        season,
+        round_num,
+        driver_id,
+        AVG(avg_lap_delta) AS avg_lap_delta,
+        AVG(degradation_slope) AS avg_degradation_slope
+    FROM {{ ref('int_tyre_degradation') }}
+    GROUP BY season, round_num, driver_id
 ),
 
 drivers AS (
@@ -36,9 +43,8 @@ joined AS(
         s.num_stops,
         ROUND(s.total_pit_duration, 3) AS total_pit_duration,
         ROUND(s.avg_pit_duration, 3) AS avg_pit_duration,
-        td.stint_number,
         ROUND(td.avg_lap_delta, 4) AS avg_lap_delta,
-        ROUND(td.degradation_slope, 4) AS degradation_slope
+        ROUND(td.avg_degradation_slope, 4) AS avg_degradation_slope
     FROM strategy s 
     LEFT JOIN tyre_degradation td 
         ON s.season = td.season 

@@ -1,6 +1,6 @@
 """
 ===========================================================
-F1 Race Intelligence - Page 3 Race Strategy
+F1 Race Intelligence - Page 4 Race Strategy
 ===========================================================
 Script purpose:
     Create race strategy page. Analyzes race strategy of teams
@@ -50,16 +50,11 @@ pit_stop_query = f"""
         num_stops,
         total_pit_duration,
         avg_pit_duration,
-        stint_number,
         avg_lap_delta,
-        degradation_slope
+        avg_degradation_slope
     FROM `{GCP_PROJECT_ID}.f1_dbt.mart_race_strategy_outcome`  
     WHERE season = {selected_season}
         AND round_num = {selected_round}
-    QUALIFY ROW_NUMBER() OVER (
-        PARTITION BY season, round_num, driver_name, stint_number
-        ORDER BY avg_pit_duration
-    ) = 1
 """
 
 strategy_df = run_query(pit_stop_query)
@@ -72,14 +67,13 @@ st.dataframe(
     use_container_width=True
 )
 
-st.subheader("📉 Tyre Degradation by Stint")
-fig = px.line(
+st.subheader("📉 Tyre Degradation")
+fig = px.bar(
     strategy_df,
-    x='stint_number',
-    y='degradation_slope',
-    color='driver_code',
-    title=f"Tyre Degradation — Season {selected_season} Round {selected_round}",
-    labels={'stint_number': 'Stint', 'degradation_slope': 'Degradation Slope'}
+    x='driver_code',
+    y='avg_degradation_slope',
+    title=f"Avg Tyre Degradation — Season {selected_season} Round {selected_round}",
+    labels={'driver_code': 'Driver', 'avg_degradation_slope': 'Degradation Slope'}
 )
 st.plotly_chart(fig, use_container_width=True)
 

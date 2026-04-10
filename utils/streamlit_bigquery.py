@@ -19,7 +19,14 @@ logger = logging.getLogger(__name__)
 @st.cache_resource
 def get_bq_client():
     try:
-        credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
+        if "gcp" in st.secrets:
+            credentials = service_account.Credentials.from_service_account_info(
+                st.secrets["gcp"]
+            )
+        else:
+            from utils.config import KEY_PATH
+            credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
+        
         client = bigquery.Client(project=GCP_PROJECT_ID, credentials=credentials)
         return client
 

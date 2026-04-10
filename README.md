@@ -90,6 +90,7 @@ streamlit run app.py
 ---
 
 ## 📁 Project Structure
+```
 f1-race-intelligence/
 ├── ingestion/              # API extraction scripts
 │   ├── jolpica.py          # Jolpica API ingestion
@@ -107,6 +108,7 @@ f1-race-intelligence/
 │   ├── transforms.py
 │   └── streamlit_bigquery.py
 └── app.py                  # Streamlit entry point
+```
 
 ---
 
@@ -114,6 +116,6 @@ f1-race-intelligence/
 
 ---
 ### Sample .env structure
-GCP_PROJECT_ID=your-gcp-project-id
-KEY_PATH=credentials.json
-BQ_DATASET=f1_raw
+- GCP_PROJECT_ID=your-gcp-project-id
+- KEY_PATH=credentials.json
+- BQ_DATASET=f1_raw

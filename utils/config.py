@@ -13,8 +13,6 @@ load_dotenv(dotenv_path=".env")
 
 
 KEY_PATH = os.getenv("KEY_PATH")
-GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
-BQ_DATASET = os.getenv("BQ_DATASET")
 
 try:
     import streamlit as st

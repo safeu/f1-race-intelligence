@@ -2,7 +2,7 @@
 
 An automated Formula 1 data pipeline and analytics dashboard ingesting historical race data from the Jolpica API into BigQuery, with dbt transformations surfacing pit strategy efficiency, driver consistency scores, tyre degradation curves, and championship progression across the 2020–2024 seasons.
 
-**[🔗 Live Demo](your-streamlit-url-here)** ← update after deployment
+**[🔗 Live Demo](https://f1-race-intelligence.streamlit.app/)** ← update after deployment
 
 ---
 

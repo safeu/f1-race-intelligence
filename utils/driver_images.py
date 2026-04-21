@@ -12,7 +12,7 @@ def get_driver_photo(driver_name):
         search_params = {
             "action": "query",
             "list": "search",
-            "srsearch": f"{driver_name} racing driver",
+            "srsearch": f"{driver_name} Formula One driver 2020",
             "format": "json",
             "srlimit": 1
         }

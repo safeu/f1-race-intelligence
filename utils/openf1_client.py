@@ -22,6 +22,10 @@ Functions present:
         - checks if there is a session live
     get_intervals()
         - checks gap to leader and intervals during live sessions for standings
+    get_team_radio()
+        - get team radio during race weekends
+    get_sessions_by_year()
+        - get f1 sessions by year (useful for team radio)
 """
 
 import requests
@@ -144,4 +148,33 @@ def get_intervals(session_key):
         return intervals
     except Exception as e:
         logger.error(f"Error getting intervals: {e}")
+        raise
+
+
+def get_team_radio(session_key):
+    try:
+        radio = fetch_openf1('team_radio', {'session_key': session_key})
+        if not radio:
+            return None
+        logger.info(f"Fetched {len(radio)} team radio records for session {session_key}")
+        return radio
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            return None
+        raise
+    except Exception as e:
+        logger.error(f"Error getting team radio: {e}")
+        raise
+
+def get_sessions_by_year(year, session_type=None):
+    try:
+        params = {'year': year}
+        if session_type:
+            params['session_type'] = session_type
+        sessions = fetch_openf1('sessions', params)
+        if not sessions:
+            return None
+        return sessions
+    except Exception as e:
+        logger.error(f"Error getting sessions: {e}")
         raise

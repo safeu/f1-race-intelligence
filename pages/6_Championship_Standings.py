@@ -1,6 +1,6 @@
 """
 ===========================================================
-F1 Race Intelligence - Page 3 Championship Standings
+F1 Race Intelligence - Page 6 Championship Standings
 ===========================================================
 Script purpose:
     Create championship standings page. Showcase the championship

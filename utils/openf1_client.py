@@ -18,29 +18,47 @@ Functions present:
         - gets flags and safety car info
     get_driver_info() 
         - gets driver numbers and names for that session
+    is_session_live()
+        - checks if there is a session live
+    get_intervals()
+        - checks gap to leader and intervals during live sessions for standings
 """
 
 import requests
 import logging
 from utils.config import openf1_base_url
+from datetime import datetime, timezone
+import time
 
 logger = logging.getLogger(__name__)
 
 def fetch_openf1(endpoint, params):
-    try:
-        url = f"{openf1_base_url}/{endpoint}"
-        response = requests.get(url, params=params)
-
-        response.raise_for_status()
-        data = response.json()
-
-        logger.info(f"Fetched {len(data)} records from {endpoint}")
-        return data
+    url = f"{openf1_base_url}/{endpoint}"
     
-    except Exception as e:
-        logger.error(f"Failed to fetch openf1 data: {e}")
-        raise
-
+    for attempt in range(3):
+        try:
+            response = requests.get(url, params=params)
+            
+            if response.status_code == 429:
+                logger.warning(f"Rate limited on {endpoint}, waiting 10 seconds...")
+                time.sleep(10)
+                continue
+                
+            response.raise_for_status()
+            data = response.json()
+            logger.info(f"Fetched {len(data)} records from {endpoint}")
+            return data
+            
+        except requests.exceptions.HTTPError as e:
+            if response.status_code == 404:
+                raise
+            if attempt == 2:
+                raise
+            time.sleep(5)
+            
+        except Exception as e:
+            logger.error(f"Failed to fetch openf1 data: {e}")
+            raise
 
 def get_latest_session():
     try:
@@ -49,11 +67,21 @@ def get_latest_session():
         if not sessions:
             return None
         
-        latest = sorted(sessions, key=lambda x: x['date_start'], reverse=True)[0]
-    
-        logger.info(f"Latest session: {latest['session_name']} - {latest['country_name']} {latest['year']}")
-        return latest
-    
+        sorted_sessions = sorted(sessions, key=lambda x: x['date_start'], reverse=True)
+        
+        for session in sorted_sessions:
+            try:
+                test = fetch_openf1('laps', {
+                    'session_key': session['session_key'], 
+                    'lap_number': 1
+                })
+                if test:
+                    logger.info(f"Latest available session: {session['country_name']} {session['year']}")
+                    return session
+            except Exception:
+                continue
+        return None
+        
     except Exception as e:
         logger.error(f"Failed to get latest session: {e}")
         raise
@@ -98,3 +126,22 @@ def get_driver_info(session_key):
         logger.error(f"Error getting driver info: {e}")
         raise
 
+def is_session_live(session):
+    now = datetime.now(timezone.utc)
+    date_start = datetime.fromisoformat(session['date_start'])
+    date_end = datetime.fromisoformat(session['date_end'])
+    return date_start <= now <= date_end
+
+
+def get_intervals(session_key):
+    try:
+        intervals = fetch_openf1('intervals', {'session_key': session_key})
+        
+        if not intervals:
+            return None
+        
+        logger.info(f"Fetched {len(intervals)} interval records for session {session_key}")
+        return intervals
+    except Exception as e:
+        logger.error(f"Error getting intervals: {e}")
+        raise

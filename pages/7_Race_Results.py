@@ -45,19 +45,22 @@ st.subheader(f"🏁 {selected_race} {selected_season} — Race Classification")
 
 results_query = f"""
     SELECT DISTINCT
-        finish_position,
-        driver_name,
-        driver_code,
-        constructor_id,
-        grid_position,
-        positions_gained,
-        points,
-        status
-    FROM `{GCP_PROJECT_ID}.f1_dbt.mart_driver_performance`
-    WHERE season = {selected_season}
-        AND round_num = {selected_round}
-    ORDER BY finish_position
+        mp.finish_position,
+        mp.driver_name,
+        mp.driver_code,
+        dc.constructor_name,
+        mp.grid_position,
+        mp.positions_gained,
+        mp.points,
+        mp.status
+    FROM `{GCP_PROJECT_ID}.f1_dbt.mart_driver_performance` mp
+    LEFT JOIN `{GCP_PROJECT_ID}.f1_dbt.dim_constructors` dc
+        ON mp.constructor_id = dc.constructor_id
+    WHERE mp.season = {selected_season}
+        AND mp.round_num = {selected_round}
+    ORDER BY mp.finish_position
 """
+
 results_df = run_query(results_query)
 
 
@@ -65,7 +68,7 @@ results_df = run_query(results_query)
 st.dataframe(
     results_df[[
         'finish_position', 'driver_name', 'driver_code',
-        'constructor_id', 'grid_position', 'positions_gained',
+        'constructor_name', 'grid_position', 'positions_gained',
         'points', 'status'
     ]],
     hide_index=True,

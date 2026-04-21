@@ -1,10 +1,17 @@
 """
 ===========================================================
-Create the main page of the app (home page)
+SCRIPT: streamlit_bigquery
 ===========================================================
 Script purpose:
-    This script's purpose is to create the main page for the app;
-    includes the app title, description, and others.
+    This script's purpose is to connect bigquery to streamlit,
+    to be able to create dashboards and present data from google
+    bigquery.
+
+Functions present:
+    get_bq_client()
+        - get credentials of bigquery client
+    run_query()
+        - run query
 
 """
 

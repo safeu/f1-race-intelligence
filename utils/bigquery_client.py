@@ -8,6 +8,13 @@ Script purpose:
 
     Now contains a script to load flattened data from jolpica and transforms files
     to BigQuery.
+
+Functions present:
+    get_bigquery_client()
+        - get bigquery client credentials from utils config
+    load_to_bigquery()
+        - load data to bigquery (as seen in ingestion/run_ingestion.py)
+
 """
 
 from utils.config import KEY_PATH, GCP_PROJECT_ID, BQ_DATASET

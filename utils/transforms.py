@@ -1,11 +1,22 @@
 """
 ===========================================================
-Data transformation utilities
+SCRIPT: transforms (data transformation utilities of Jolpica API)
 ===========================================================
 Script purpose:
     Script to transform data from raw API response to flat schema. gets raw API
     response from jolpica.py then transforms it here, before loading it into
     BigQuery.
+
+Functions present:
+    flatten_lap_times()
+        - used to flatten json from get_lap_times (as seen in ingestion/run_ingestion.py)
+    flatten_pit_stops()
+        - used to flatten json from get_pit_stops (as seen in ingestion/run_ingestion.py)
+    flatten_races()
+        - used to flatten json from get_races
+    flatten_sprint_results()
+        - used to flatten json from get_sprint_results
+
 """
 import logging
 from datetime import datetime, timezone

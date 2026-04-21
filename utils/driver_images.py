@@ -1,3 +1,16 @@
+"""
+===========================================================
+SCRIPT: driver_images
+===========================================================
+Script purpose:
+    Script to get driver images from wikipedia (its easier to get)
+
+Functions present:
+    get_driver_photo()
+        - get driver photo from wikipedia.
+"""
+
+
 import requests
 
 def get_driver_photo(driver_name):

@@ -26,6 +26,7 @@ except Exception:
 
 #other variable settings
 base_url = "https://api.jolpi.ca/ergast/f1"
+openf1_base_url = "https://api.openf1.org/v1"
 
 
 #colors

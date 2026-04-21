@@ -1,7 +1,10 @@
 """
 ===========================================================
-F1 Race Intelligence - Page 9 Constructor Efficiency
+F1 Race Intelligence - Page 10 Constructor Efficiency
 ===========================================================
+Script purpose:
+    To view constructor efficiency data
+
 """
 
 import streamlit as st

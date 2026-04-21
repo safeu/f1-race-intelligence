@@ -1,7 +1,9 @@
 """
 ===========================================================
-F1 Race Intelligence - Page 8 Circuit Profiles
+F1 Race Intelligence - Page 9 Circuit Profiles
 ===========================================================
+Script purpose:
+    To analyze/view profile of different circuits
 """
 
 import streamlit as st

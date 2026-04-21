@@ -174,6 +174,12 @@ def get_sessions_by_year(year, session_type=None):
         sessions = fetch_openf1('sessions', params)
         if not sessions:
             return None
+        
+        sessions = [
+            s for s in sessions 
+            if s.get('session_type') not in ['Testing']
+        ]
+        
         return sessions
     except Exception as e:
         logger.error(f"Error getting sessions: {e}")

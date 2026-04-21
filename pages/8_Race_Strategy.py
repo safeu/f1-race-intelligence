@@ -1,6 +1,6 @@
 """
 ===========================================================
-F1 Race Intelligence - Page 7 Race Strategy
+F1 Race Intelligence - Page 8 Race Strategy
 ===========================================================
 Script purpose:
     Create race strategy page. Analyzes race strategy of teams

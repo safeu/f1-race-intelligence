@@ -1,9 +1,12 @@
 """
 ===========================================================
-Loading secret variables
+SCRIPT: config
 ===========================================================
 Script purpose:
-    Script to fetch/load .env variables 
+    Script to fetch/load .env variables
+
+    Also serves its purpose of storing hardcoded settings
+    for ease of access
 """
 
 import os
@@ -48,3 +51,19 @@ CONSTRUCTOR_COLORS = {
     'Force India': '#F596C8',
     'Toro Rosso': '#469BFF',
 }
+
+
+#for race control page
+def get_flag_display(flag):
+    flag_map = {
+        'GREEN': ('🟢', '#00ff00'),
+        'YELLOW': ('🟡', '#ffff00'),
+        'DOUBLE YELLOW': ('🟡🟡', '#ffff00'),
+        'RED': ('🔴', '#ff0000'),
+        'BLUE': ('🔵', '#0000ff'),
+        'CHEQUERED': ('🏁', '#ffffff'),
+        'SAFETY CAR': ('🚗', '#ffff00'),
+        'VIRTUAL SAFETY CAR': ('🚗', '#ffff00'),
+        'CLEAR': ('🟢', '#00ff00'),
+    }
+    return flag_map.get(flag, ('⚪', '#ffffff'))

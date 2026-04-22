@@ -14,6 +14,7 @@ from utils.config import GCP_PROJECT_ID
 st.set_page_config(page_title="Race Results", page_icon="🏆", layout="wide")
 st.title("🏆 Race Results")
 st.caption("💡 Gap times coming soon — finish positions and points shown above")
+st.caption("Some data have issues 2024 and 2025 in particular")
 
 season_query = f"""
     SELECT DISTINCT season

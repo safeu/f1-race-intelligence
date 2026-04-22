@@ -17,7 +17,7 @@ from utils.driver_images import get_driver_photo
 st.set_page_config(page_title="Driver Performance", page_icon="🏎️", layout="wide")
 
 st.title("👤 Driver Performance")
-st.caption("Note: Current Data only has the 2020-2024 Formula 1 season")
+st.caption("Note: Current Data only has the 2010-2025 Formula 1 season")
 
 
 drivers_query = f"""

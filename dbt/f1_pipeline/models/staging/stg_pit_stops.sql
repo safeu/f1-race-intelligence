@@ -22,10 +22,10 @@ renamed AS (
         time,
 
         CASE
-            WHEN duration IS NULL OR duration = '' THEN NULL
-            WHEN duration LIKE '%:%'
-            THEN (CAST(SPLIT(duration, ':')[OFFSET(0)] AS FLOAT64) * 60) +
-                CAST(SPLIT(duration, ':')[OFFSET(1)] AS FLOAT64)
+            WHEN CAST(duration AS STRING) IS NULL OR CAST(duration AS STRING) = '' THEN NULL
+            WHEN CAST(duration AS STRING) LIKE '%:%'
+            THEN (CAST(SPLIT(CAST(duration AS STRING), ':')[OFFSET(0)] AS FLOAT64) * 60) +
+                CAST(SPLIT(CAST(duration AS STRING), ':')[OFFSET(1)] AS FLOAT64)
             ELSE CAST(duration AS FLOAT64)
         END AS duration,
 

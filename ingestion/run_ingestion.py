@@ -19,7 +19,7 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-SEASONS = [2020, 2021, 2022, 2023, 2024]
+SEASONS = list(range(2010, 2026))
 
 
 def main():
@@ -42,7 +42,15 @@ def main():
             flat_sprints = flatten_sprint_results(sprint_races)
             load_to_bigquery(flat_sprints, "raw_sprint_races", write_mode="WRITE_APPEND")
 
+            seen = set()
+            unique_races = []
             for race in races:
+                key = race.get("round")
+                if key not in seen:
+                    seen.add(key)
+                    unique_races.append(race)
+
+            for race in unique_races:
                 try:
                     #get the laptimes and pit stops for each round
                     round_num = race.get("round")
@@ -56,12 +64,12 @@ def main():
                     flat_pit_stops = flatten_pit_stops(season, round_num, pit_stops)
                     load_to_bigquery(flat_pit_stops, "raw_pit_stops", write_mode="WRITE_APPEND")
                 
-                    time.sleep(2)
+                    time.sleep(0.5)
                 except Exception as e:
                     logger.error(f"Error fetching/loading data: {e}")
                     continue
                 
-            time.sleep(5)        
+            time.sleep(1)        
         logger.info("Data loaded successfully")
 
     except Exception as e:

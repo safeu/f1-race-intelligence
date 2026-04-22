@@ -62,17 +62,26 @@ def flatten_pit_stops(season, round_num, pit_stops):
 
 def flatten_races(races):
     results = []
+    seen_rounds = set()
+    
     for race in races:
+        round_num = race.get("round")
+        season = race.get("season")
+        key = (season, round_num)
+        
+        if key in seen_rounds:
+            continue
+        seen_rounds.add(key)
+        
         row = {
-            "season": race.get("season"),
-            "round": race.get("round"),
+            "season": season,
+            "round": round_num,
             "race_name": race.get("raceName"),
             "circuit_id": race.get("Circuit", {}).get("circuitId"),
             "date": race.get("date"),
             "results": json.dumps(race.get("Results", [])),
             "ingested_at": datetime.now(timezone.utc).isoformat()
-            }
-
+        }
         results.append(row)
     return results
 

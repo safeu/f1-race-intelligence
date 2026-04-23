@@ -1,13 +1,13 @@
 # 🏎️ F1 Race Intelligence
 
-A hybrid Formula 1 analytics platform combining a real-time layer (OpenF1 API → Streamlit) for live race data and a batch layer (Jolpica API → BigQuery → dbt) for historical analysis across the 2020–2024 seasons — deployed live on Streamlit Community Cloud.
+A hybrid Formula 1 analytics platform combining a real-time layer (OpenF1 API → Streamlit) for live race data and a batch layer (Jolpica API → BigQuery → dbt) for historical analysis across the 2010–2025 seasons — deployed live on Streamlit Community Cloud.
 
 **[🔗 Live Demo](https://f1-race-intelligence.streamlit.app/)** 
 
 ---
 
 ## 🏗️ Architecture
-![Architecture Diagram](docs/architecture.png) ← add later
+![Architecture Diagram](docs/F1_Data_Architecture.png)
 
 ---
 
@@ -32,7 +32,7 @@ A hybrid Formula 1 analytics platform combining a real-time layer (OpenF1 API �
 - **Race Control** — Live flags, safety cars, penalties, and steward decisions
 
 ### 📅 Historical Pages (Jolpica + BigQuery + dbt)
-- **Race Results** — Full race classification for any race across 2020–2024
+- **Race Results** — Full race classification for any race across 2010–2025
 - **Driver Performance** — Career stats, lap consistency, best circuits, positions gained
 - **Head to Head** — Teammate comparisons with win rate and finish position charts
 - **Championship Standings** — Season points progression for drivers and constructors
@@ -126,16 +126,14 @@ f1-race-intelligence/
 │   └── driver_images.py        # Driver photo fetching
 │
 └── docs/
-└── architecture.png            # Architecture diagram
+└── F1_Data_Architecture.png    # Architecture diagram
 ```
 ---
 
 ## 🔮 Planned Enhancements
-- Expand historical data to 26 seasons (2000–2025)
 - OpenF1 batch ingestion for post-race historical storage
 - Apache Airflow orchestration for automated pipeline runs
 - Docker containerization
-- Architecture diagram
 
 ---
 

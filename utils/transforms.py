@@ -61,29 +61,52 @@ def flatten_pit_stops(season, round_num, pit_stops):
     return results
 
 def flatten_races(races):
-    results = []
-    seen_rounds = set()
+    results = {}  # key = (season, round) → row
     
     for race in races:
         round_num = race.get("round")
         season = race.get("season")
         key = (season, round_num)
         
-        if key in seen_rounds:
-            continue
-        seen_rounds.add(key)
+        race_results = race.get("Results", [])
         
-        row = {
-            "season": season,
-            "round": round_num,
-            "race_name": race.get("raceName"),
-            "circuit_id": race.get("Circuit", {}).get("circuitId"),
-            "date": race.get("date"),
-            "results": json.dumps(race.get("Results", [])),
-            "ingested_at": datetime.now(timezone.utc).isoformat()
-        }
-        results.append(row)
-    return results
+        if key not in results:
+            results[key] = {
+                "season": season,
+                "round": round_num,
+                "race_name": race.get("raceName"),
+                "circuit_id": race.get("Circuit", {}).get("circuitId"),
+                "date": race.get("date"),
+                "results_list": race_results,
+                "ingested_at": datetime.now(timezone.utc).isoformat()
+            }
+        else:
+            # merge results from subsequent pages
+            results[key]["results_list"].extend(race_results)
+    
+    # convert to final format
+    flat = []
+    for key, row in results.items():
+        # deduplicate drivers within results
+        seen_drivers = set()
+        unique_results = []
+        for r in row["results_list"]:
+            driver_id = r.get("Driver", {}).get("driverId")
+            if driver_id not in seen_drivers:
+                seen_drivers.add(driver_id)
+                unique_results.append(r)
+        
+        flat.append({
+            "season": row["season"],
+            "round": row["round"],
+            "race_name": row["race_name"],
+            "circuit_id": row["circuit_id"],
+            "date": row["date"],
+            "results": json.dumps(unique_results),
+            "ingested_at": row["ingested_at"]
+        })
+    
+    return flat
 
 
 #i forgor sprint races 

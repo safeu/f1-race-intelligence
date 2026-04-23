@@ -13,7 +13,7 @@ from utils.config import GCP_PROJECT_ID
 
 st.set_page_config(page_title="Circuit Profiles", page_icon="🏁", layout="wide")
 st.title("🏁 Circuit Profiles")
-st.caption("Circuit characteristics averaged across 2020-2024 seasons")
+st.caption("Circuit characteristics averaged across 2010-2025 seasons")
 
 circuits_query = f"""
     SELECT

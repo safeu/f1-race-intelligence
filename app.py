@@ -24,7 +24,7 @@ ingesting live telemetry and historical race data from dual APIs into BigQuery,
 with dbt models surfacing pit strategy efficiency, driver consistency scores, 
 and tyre degradation curves.
 
-*Data covers the 2020–2024 Formula 1 seasons. Currently only have Jolpica API (OpenF1 API in the works)*
+*Data covers the 2010–2026 Formula 1 seasons. With Jolpica API handling 2010-2025 and OpenF1 API handling recent and live race weekends*
 """)
 
 st.divider()
@@ -56,14 +56,15 @@ with col4:
 st.divider()
 
 
-st.subheader("🏆 2024 Championship Summary")
+st.subheader("🏆 2025 Championship Summary")
+latest_season = f"SELECT MAX(season) FROM `{GCP_PROJECT_ID}.f1_dbt.mart_championship_standings`"
 champion_query = f"""
     SELECT
         driver_name,
         driver_code,
         MAX(cumulative_drivers_points) AS total_points
     FROM `{GCP_PROJECT_ID}.f1_dbt.mart_championship_standings`
-    WHERE season = 2024
+    WHERE season = ({latest_season})
     GROUP BY driver_name, driver_code
     ORDER BY total_points DESC
     LIMIT 5
@@ -71,7 +72,33 @@ champion_query = f"""
 
 champion_df = run_query(champion_query)
 
-st.markdown("**Top 5 Drivers — 2024 Season**")
+st.markdown("**Top 5 Drivers — 2025 Season**")
+st.dataframe(
+    champion_df[['driver_name', 'driver_code', 'total_points']],
+    hide_index=True,
+    use_container_width=True
+)
+st.divider()
+
+
+
+st.subheader("🏆 Past Formula 1 Champions")
+champions_query = f"""
+    SELECT
+        season,
+        driver_name,
+        driver_code,
+        MAX(cumulative_drivers_points) AS total_points
+    FROM `{GCP_PROJECT_ID}.f1_dbt.mart_championship_standings`
+    WHERE season != ({latest_season})
+    GROUP BY season, driver_name, driver_code
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY season ORDER BY MAX(cumulative_drivers_points) DESC) = 1
+    ORDER BY season DESC
+"""
+
+champion_df = run_query(champions_query)
+
+st.markdown("**From 2010 - 2024 Seasons**")
 st.dataframe(
     champion_df[['driver_name', 'driver_code', 'total_points']],
     hide_index=True,

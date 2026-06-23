@@ -4,6 +4,8 @@ A hybrid Formula 1 analytics platform combining a real-time layer (OpenF1 API �
 
 **[🔗 Live Demo](https://f1-race-intelligence.streamlit.app/)** 
 
+![Click here to watch the demo video](docs/Vid_Demo.webm)
+
 ---
 
 ## 🏗️ Architecture
